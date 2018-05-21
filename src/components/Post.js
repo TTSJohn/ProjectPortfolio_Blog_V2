@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import '../css/Post.css';
 
 
@@ -8,7 +7,7 @@ class Post extends Component {
     super();
   }
 
-   componentWillMount(){ 
+   componentWillMount() { 
     this.state = {
       title: this.props.title,
       body: this.props.body,

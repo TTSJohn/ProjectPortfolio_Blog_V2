@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import '../css/Blog.css';
-import Post from '../components/Post';
+import Post from './Post';
 import myFirebase from '../utility/MyFirebase';
 
 const GENERIC_POST_TITLE = "New Post Title", GENERIC_POST_BODY = "New Post Body";
@@ -15,6 +15,24 @@ class Blog extends Component {
     this.firebaseDBRef.once('value').then((snapshot) => {
       console.log(snapshot.val());
     });    
+  }
+
+  componentDidMount() {
+    const postsRef = myFirebase.getFirebaseRef();
+    postsRef.on('value', (snapshot) => {
+      let posts = snapshot.val();
+      let newState = [];
+      for (let key in posts) {
+        newState.push({
+          id: key,
+          title: posts[key].title,
+          body: posts[key].body
+        });
+      }
+      this.setState({
+        posts: newState
+      });
+    });
   }
 
   addPost(posts) {
@@ -45,7 +63,7 @@ class Blog extends Component {
     }
     this.setState(
       {
-        notes: this.state.notes
+        posts: this.state.posts
       }
     );
   }
@@ -61,7 +79,7 @@ class Blog extends Component {
     });
     this.setState(
       {
-        notes: newPostArr
+        posts: newPostArr
       }
     );
   }

@@ -1,4 +1,4 @@
-// MyFirebase.js
+
 
 import * as firebase from 'firebase';
 
